@@ -18,5 +18,10 @@
 <input name="action" type="submit" value="Buscar Alumno">
 </form>
 <%=message%>
+
+<form action="logIn" method="post">
+<input type="submit" name="action" value="logOut">
+</form>
+
 </body>
 </html>
