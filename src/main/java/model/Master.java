@@ -10,7 +10,14 @@ import java.util.List;
  * 
  */
 @Entity
-@NamedQuery(name="Master.findAll", query="SELECT m FROM Master m")
+@NamedQueries({
+	@NamedQuery(name="Master.findAll", query="SELECT m FROM Master m"),
+	@NamedQuery(name="Master.findByName", query="SELECT m FROM Master m WHERE m.name = :name"),
+	@NamedQuery(name="Master.findByYear", query="SELECT m FROM Master m WHERE m.year = :year"),
+	@NamedQuery(name="Master.findByCampus", query="SELECT m FROM Master m WHERE m.campus = :campus")
+
+
+})
 public class Master implements Serializable {
 	private static final long serialVersionUID = 1L;
 

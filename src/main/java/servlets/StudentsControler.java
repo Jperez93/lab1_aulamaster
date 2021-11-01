@@ -163,9 +163,6 @@ public class StudentsControler extends HttpServlet {
 			throws ServletException, IOException {
 		Student student = new Student();
 		String snia = request.getParameter("niaToLook");
-		request.setAttribute("NIA", snia);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/studentsForm1.jsp");
-		PrintWriter out = response.getWriter();
 		request.setAttribute("STUDENT", student); 
 		if (!snia.isEmpty()) {
 			int nia = Integer.parseInt(snia);
