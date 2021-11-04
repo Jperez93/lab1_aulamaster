@@ -60,7 +60,7 @@ public class MastersControler extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
+
 	}
 
 	/**
@@ -74,12 +74,54 @@ public class MastersControler extends HttpServlet {
 		case "Buscar Master":
 			searchMaster(request, response);
 			break;
-
+		case "Mostrar Detalles":
+			showMasterDetails(request, response, null);
+			break;
+		case "Inscribir Alumno":
+			updateMasterInscriptions(request, response, true);
+			break;
+		case "Eliminar Alumno":
+			updateMasterInscriptions(request, response, false);
+			break;
 		default:
 			break;
 		}
 
 	}
+
+	private void updateMasterInscriptions(HttpServletRequest request, HttpServletResponse response, boolean insert)
+			throws IOException, ServletException {
+		int nia = Integer.parseInt(request.getParameter("nia"));
+		int masterId = Integer.parseInt(request.getParameter("masterId"));
+		boolean fail = true;
+		String message = null;
+		try {
+			if(mastermodel.UpdateMasterInscriptions(nia, masterId, insert)) {
+				if(insert) {
+					message = "No se pudo inscribir al estudiante, compruebe si ya está inscrito en este master o si no está registrado";
+				}else {
+					message = "No se pudo eliminar al estudiante, compruebe si el estudiante está inscrito o si no está registrado"; //Shuldn't send this message, Should it be unreachable
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			message = "Algo no fue bien, intentelo más tarde";
+		}
+
+		showMasterDetails(request, response, message);
+	}
+
+	private void showMasterDetails(HttpServletRequest request, HttpServletResponse response, String message)
+			throws IOException, ServletException {
+		Master master = new Master();
+		int masterId = Integer.parseInt(request.getParameter("masterId"));
+		try {
+			master = mastermodel.getMaster(masterId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		dispatch(request, response, "/masterInfo.jsp",message, master);
+		}
 
 	private void searchMaster(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -88,15 +130,12 @@ public class MastersControler extends HttpServlet {
 		parameters.put("year", request.getParameter("year"));
 		parameters.put("campus", request.getParameter("campus"));
 		parameters.put("name", request.getParameter("name"));
-		String sql = "";
 		try {
 			list = mastermodel.getMastersList(parameters);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/searchMaster.jsp");
-		request.setAttribute("LISTOFMASTERS", list);
-		dispatcher.forward(request, response);
+		dispatch(request, response, "/searchMaster.jsp", null, list);
 
 	}
 
@@ -107,10 +146,13 @@ public class MastersControler extends HttpServlet {
 		dispatcher.forward(request, response);
 	}
 
-	/*
-	 * private void dispatch(HttpServletRequest request, HttpServletResponse
-	 * response,String jsp, String message) throws ServletException, IOException {
-	 * request.setAttribute("STUDENT", student); dispatch(request, response, jsp,
-	 * message); }
-	 */
+	private void dispatch(HttpServletRequest request, HttpServletResponse response, String jsp, String message, Master master) throws ServletException, IOException {
+		request.setAttribute("MASTER", master);
+		dispatch(request, response, jsp, message);
+	}
+	
+	private void dispatch(HttpServletRequest request, HttpServletResponse response, String jsp, String message, List<Master> listOfMasters) throws ServletException, IOException {
+		request.setAttribute("LISTOFMASTERS", listOfMasters);
+		dispatch(request, response, jsp, message);
+	}
 }

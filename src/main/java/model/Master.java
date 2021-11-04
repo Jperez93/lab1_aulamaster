@@ -12,6 +12,7 @@ import java.util.List;
 @Entity
 @NamedQueries({
 	@NamedQuery(name="Master.findAll", query="SELECT m FROM Master m"),
+	@NamedQuery(name="Master.findById", query="SELECT m FROM Master m WHERE m.id = :id"),
 	@NamedQuery(name="Master.findByName", query="SELECT m FROM Master m WHERE m.name = :name"),
 	@NamedQuery(name="Master.findByYear", query="SELECT m FROM Master m WHERE m.year = :year"),
 	@NamedQuery(name="Master.findByCampus", query="SELECT m FROM Master m WHERE m.campus = :campus")

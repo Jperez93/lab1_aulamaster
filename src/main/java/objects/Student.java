@@ -1,8 +1,14 @@
 package objects;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Base64;
 import java.util.Date;
 
 import javax.swing.JLabel;
+
+
+
 
 public class Student {
 	
@@ -11,9 +17,9 @@ public class Student {
 	private String surname1;
 	private String surname2;
 	private Date dateOfBirth;
-	private JLabel image;
+	private byte[] image;
 	
-	public Student(int nia, String name, String surname1, String surname2, Date dateOfBirth, JLabel image) {
+	public Student(int nia, String name, String surname1, String surname2, Date dateOfBirth, byte[] image) {
 		super();
 		this.nia = nia;
 		this.name = name;
@@ -73,12 +79,27 @@ public class Student {
 		this.dateOfBirth = dateOfBirth;
 	}
 
-	public JLabel getImage() {
+	public byte[] getImage() {
 		return image;
 	}
 
-	public void setImage(JLabel image) {
+	public void setImage(byte[] image) {
 		this.image = image;
+	}
+	
+	public URL getEncodedImage() {
+		URL url = null;
+		if(image != null) {
+			String urlString = new String(image);
+			try {
+				URL url1 = new URL(urlString);
+			} catch (MalformedURLException e) {
+				e.printStackTrace();
+			}
+		}
+		return url;
+
+
 	}
 
 	@Override

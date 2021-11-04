@@ -2,6 +2,8 @@ package model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -102,5 +104,13 @@ public class Student implements Serializable {
 	public void setMasters(List<Master> masters) {
 		this.masters = masters;
 	}
+
+	@Override
+	public String toString() {
+		return "Student [nia=" + nia + ", dateofbirth=" + dateofbirth + ", name=" + name+ ", surname1=" + surname1 + ", surname2=" + surname2
+				+ "]";
+	}
+	
+	
 
 }
