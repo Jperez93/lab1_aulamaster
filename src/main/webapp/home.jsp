@@ -3,9 +3,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
-</head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8">
+<meta name="keywords" content="nOMBREAPELLIDOS">
+<meta name="description" content="">
+<meta name="page_type" content="np-template-header-footer-from-plugin">
+<title>welcome</title>
+<link rel="stylesheet" href="nicepage.css" media="screen">
 <body>
 	<jsp:include page="/header.html" />
 

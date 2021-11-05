@@ -6,10 +6,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<style type="text/css"
-	href="http://localhost:8080/lab1_aulamaster/files/style.css"></style>
+<style rel="stylesheet"
+	href="http://localhost:8080/lab1_aulamaster/files/style.css"
+	type="text/css"></style>
+
 <title>Practica 1</title>
+
 </head>
+
 <%
 //		Getting the students from the controler (Servlet)
 Student chosenStu = (Student) request.getAttribute("STUDENT");
@@ -35,7 +39,7 @@ if (message == null)
 						id="nia" value=<%=chosenStu.getNia()%> readonly> Al crear
 					un Alumno nuevo, el nia se generará automáticamente.
 				</div>
-				<div class="formInput">
+				<divimage class="formInput">
 					<label for="name">Nombre:</label> <input type="text" name="name"
 						id="name" value=<%=chosenStu.getName()%>>
 				</div>
@@ -55,9 +59,7 @@ if (message == null)
 				<div class="formInput">
 					<label for="image">Foto:</label>
 					<%
-					if(chosenStu.getImage() != null){
 						session.setAttribute("IMAGE", chosenStu.getImage());
-					}
 					%>
 					<img alt="Foto del estudiante no disponible"
 						src="./displayImage.jsp"> <input type="file" name="image">

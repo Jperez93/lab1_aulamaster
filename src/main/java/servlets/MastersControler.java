@@ -69,24 +69,31 @@ public class MastersControler extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		String action = request.getParameter("action");
-		switch (action) {
-		case "Buscar Master":
-			searchMaster(request, response);
-			break;
-		case "Mostrar Detalles":
-			showMasterDetails(request, response, null);
-			break;
-		case "Inscribir Alumno":
-			updateMasterInscriptions(request, response, true);
-			break;
-		case "Eliminar Alumno":
-			updateMasterInscriptions(request, response, false);
-			break;
-		default:
-			break;
-		}
+		extracted(response);
+//		String action = request.getParameter("action");
+//		switch (action) {
+//		case "Buscar Master":
+//			extracted(response);
+//			//searchMaster(request, response);
+//			//break;
+//		case "Mostrar Detalles":
+//			showMasterDetails(request, response, null);
+//			break;
+//		case "Inscribir Alumno":
+//			updateMasterInscriptions(request, response, true);
+//			break;
+//		case "Eliminar Alumno":
+//			updateMasterInscriptions(request, response, false);
+//			break;
+//		default:
+//			break;
+//		}
 
+	}
+	
+	private void extracted(HttpServletResponse response) throws IOException {
+		PrintWriter out = response.getWriter();
+		out.print("todo bien");
 	}
 
 	private void updateMasterInscriptions(HttpServletRequest request, HttpServletResponse response, boolean insert)
