@@ -21,7 +21,7 @@
   border: 0; }
 
 .fr-view img.fr-rounded, .fr-view .fr-img-caption.fr-rounded img {
-  border-radius: 10px;
+  border-radis: 10px;
   -moz-border-radius: 10px;
   -webkit-border-radius: 10px;
   -moz-background-clip: padding;

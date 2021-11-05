@@ -69,32 +69,31 @@ public class MastersControler extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		extracted(response);
-//		String action = request.getParameter("action");
-//		switch (action) {
-//		case "Buscar Master":
-//			extracted(response);
-//			//searchMaster(request, response);
-//			//break;
-//		case "Mostrar Detalles":
-//			showMasterDetails(request, response, null);
-//			break;
-//		case "Inscribir Alumno":
-//			updateMasterInscriptions(request, response, true);
-//			break;
-//		case "Eliminar Alumno":
-//			updateMasterInscriptions(request, response, false);
-//			break;
-//		default:
-//			break;
-//		}
+		String action = request.getParameter("action");
+		switch (action) {
+		case "Buscar Master":
+			searchMaster(request, response);
+			break;
+		case "Ver Detalles":
+			showMasterDetails(request, response, null);
+			break;
+		case "Inscribir Alumno":
+			updateMasterInscriptions(request, response, true);
+			break;
+		case "Eliminar Alumno":
+			updateMasterInscriptions(request, response, false);
+			break;
+		default:
+			break;
+		}
 
 	}
-	
-	private void extracted(HttpServletResponse response) throws IOException {
+
+	private void extracted(HttpServletResponse response, String message) throws IOException {
 		PrintWriter out = response.getWriter();
-		out.print("todo bien");
+		out.print(message);
 	}
+	
 
 	private void updateMasterInscriptions(HttpServletRequest request, HttpServletResponse response, boolean insert)
 			throws IOException, ServletException {
@@ -127,13 +126,16 @@ public class MastersControler extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		dispatch(request, response, "/masterInfo.jsp",message, master);
+		dispatch(request, response, "/Info-Master.jsp",message, master);
 		}
 
 	private void searchMaster(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		List<Master> list = null;
 		HashMap<String, String> parameters = new HashMap<String, String>();
+		String year =request.getParameter("year");
+		String campus =request.getParameter("campus");
+		String name =request.getParameter("name");
 		parameters.put("year", request.getParameter("year"));
 		parameters.put("campus", request.getParameter("campus"));
 		parameters.put("name", request.getParameter("name"));
@@ -142,7 +144,7 @@ public class MastersControler extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		dispatch(request, response, "/searchMaster.jsp", null, list);
+		dispatch(request, response, "/SearchMasters.jsp", null, list);
 
 	}
 

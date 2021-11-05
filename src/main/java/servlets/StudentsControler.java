@@ -59,8 +59,8 @@ public class StudentsControler extends HttpServlet {
 	@Resource(name = "jdbc/tidw")
 	private DataSource ds;
 
-	String formView = "/studentsForm1.jsp";
-	String searchView = "/lookForNia.jsp";
+	String formView = "/formUsers.jsp";
+	String searchView = "/LookForNia.jsp";
 	String errorView = "/errorHandler.jsp";
 
 	@Override
@@ -94,7 +94,7 @@ public class StudentsControler extends HttpServlet {
 	 *      response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+			throws ServletException, IOException {	
 		String action = request.getParameter("action");
 		switch (action) {
 		case "Crear Alumno":
@@ -110,7 +110,7 @@ public class StudentsControler extends HttpServlet {
 			modifyStudent(request, response);
 			break;
 		case "Atras":
-			dispatch(request, response, "/lookForNia.jsp", null);
+			dispatch(request, response, "/LookForNia.jsp", null);
 			break;
 		default:
 			dispatch(request, response, "/errorHandler.jsp", null);
@@ -156,6 +156,8 @@ public class StudentsControler extends HttpServlet {
 		}
 		dispatch(request, response, formView, message, student);
 	}
+
+
 
 	private void deleteStudent(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -204,7 +206,7 @@ public class StudentsControler extends HttpServlet {
 	private void lookForStudent(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		Student student = new Student();
-		String snia = request.getParameter("niaToLook");
+		String snia = request.getParameter("nia");
 		if (!snia.isEmpty()) {
 			int nia = Integer.parseInt(snia);
 			try {
@@ -216,7 +218,6 @@ public class StudentsControler extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
-
 		dispatch(request, response, formView, null, student);
 	}
 
