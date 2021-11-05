@@ -15,6 +15,9 @@ import javax.swing.JLabel;
 import objects.Student;
 
 public class StudentModel {
+	/**
+	 * This model establishes the connection with the database and obteins all the information requested by the Students Controler
+	 */
 
 	private DataSource ds;
 
@@ -22,6 +25,14 @@ public class StudentModel {
 		this.ds = ds;
 	}
 
+	/**
+	 * 
+	 * @param nia
+	 * @return
+	 * @throws Exception
+	 * 
+	 * Returns a student instance with the information of the register whit the same nia, given in the input
+	 */
 	public Student getStudent(int nia) throws Exception {
 		Student foundStudent = null;// new Student();
 		try {
@@ -48,6 +59,13 @@ public class StudentModel {
 
 	}
 
+	/**
+	 * 
+	 * @param blob
+	 * @return
+	 * 
+	 * This is an auxiliary method which casts the information of type Blob (an image stored in the database) to an array of bytes
+	 */
 	private byte[] castBlobtoByte(Blob blob) {
 		byte[] bytes = null;
 		if (blob != null) {
@@ -63,6 +81,12 @@ public class StudentModel {
 		return bytes;
 	}
 
+	/**
+	 * 
+	 * @return
+	 * 
+	 * This is an auxiliary method which returns the max nia stored in the database
+	 */
 	public int getLastNia() {
 		int nia = 100000000;// nia min
 		try {
@@ -81,6 +105,13 @@ public class StudentModel {
 		return nia;
 	}
 
+	/**
+	 * 
+	 * @param newStudent
+	 * @return
+	 * 
+	 * Given an instance of the Entity Student, it creates a new register with the information in the database
+	 */
 	public boolean addNewStudent(Student newStudent) {
 		try {
 			Connection con = ds.getConnection();
@@ -105,6 +136,9 @@ public class StudentModel {
 
 	}
 
+	/*
+	 * Given a nia, it deletes the register in the database with the same key attribute
+	 */
 	public boolean deleteStudent(int nia) {
 		try {
 			Connection con = ds.getConnection();
@@ -117,7 +151,12 @@ public class StudentModel {
 		}
 		return true;
 	}
-
+	
+	
+	/*
+	 * 
+	 * Given an instance of the Entity Student, it overwrites the information of the register with the same nia in the database
+	 */
 	public boolean modifyStudent(Student student) {
 		try {
 			Connection con = ds.getConnection();

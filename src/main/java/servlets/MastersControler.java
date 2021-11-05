@@ -22,6 +22,12 @@ import models.MasterModel;
 
 /**
  * Servlet implementation class MastersControler
+ * 
+ *
+ * 
+ * This servlet is the controller of all requests related with the Master's
+ * functionality. Receives requests from JPSs, process the attributes of the
+ * requests and gives the control to the Masters model
  */
 @WebServlet("/MastersControler")
 public class MastersControler extends HttpServlet {
@@ -66,6 +72,9 @@ public class MastersControler extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
+	 * 
+	 *      When a request is received, get the parameter 'action' which indicates
+	 *      the functionality requested and handle the request
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -89,12 +98,23 @@ public class MastersControler extends HttpServlet {
 
 	}
 
-	private void extracted(HttpServletResponse response, String message) throws IOException {
-		PrintWriter out = response.getWriter();
-		out.print(message);
-	}
-	
-
+	/**
+	 * 
+	 * @param request
+	 * @param response
+	 * @param insert
+	 * @throws IOException
+	 * @throws ServletException
+	 * 
+	 *                          Given a nia, a masterId, and a boolean which
+	 *                          indicates if the operation requested is insert(true)
+	 *                          or delete(false). Sends this information to the
+	 *                          Masters Model in order to relate a register of the
+	 *                          table 'Students' given by the nia, and a register of
+	 *                          the table 'Masters' given by the masterId. This
+	 *                          relation is made creating a register in the table
+	 *                          'Inscriptions'.
+	 */
 	private void updateMasterInscriptions(HttpServletRequest request, HttpServletResponse response, boolean insert)
 			throws IOException, ServletException {
 		int nia = Integer.parseInt(request.getParameter("nia"));
@@ -102,11 +122,18 @@ public class MastersControler extends HttpServlet {
 		boolean fail = true;
 		String message = null;
 		try {
-			if(mastermodel.UpdateMasterInscriptions(nia, masterId, insert)) {
-				if(insert) {
+			if (mastermodel.UpdateMasterInscriptions(nia, masterId, insert)) {
+				if (insert) {
 					message = "No se pudo inscribir al estudiante, compruebe si ya está inscrito en este master o si no está registrado";
-				}else {
-					message = "No se pudo eliminar al estudiante, compruebe si el estudiante está inscrito o si no está registrado"; //Shuldn't send this message, Should it be unreachable
+				} else {
+					message = "No se pudo eliminar al estudiante, compruebe si el estudiante está inscrito o si no está registrado"; // Shuldn't
+																																		// send
+																																		// this
+																																		// message,
+																																		// Should
+																																		// it
+																																		// be
+																																		// unreachable
 				}
 			}
 		} catch (Exception e) {
@@ -117,6 +144,18 @@ public class MastersControler extends HttpServlet {
 		showMasterDetails(request, response, message);
 	}
 
+	/**
+	 * 
+	 * @param request
+	 * @param response
+	 * @throws ServletException
+	 * @throws IOException
+	 * 
+	 *                          Given a masterId, sends a request to the Master
+	 *                          Model in order to be returned an instance of the
+	 *                          class Master with the information of the register
+	 *                          with the same masterId
+	 */
 	private void showMasterDetails(HttpServletRequest request, HttpServletResponse response, String message)
 			throws IOException, ServletException {
 		Master master = new Master();
@@ -126,16 +165,28 @@ public class MastersControler extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		dispatch(request, response, "/Info-Master.jsp",message, master);
-		}
+		dispatch(request, response, "/Info-Master.jsp", message, master);
+	}
 
+	/**
+	 * 
+	 * @param request
+	 * @param response
+	 * @throws ServletException
+	 * @throws IOException
+	 * 
+	 *                          Given a set of parameters, it creates a HashMap and
+	 *                          sends it to the Master Model requesting a list with
+	 *                          all the masters that contains the attributes of the
+	 *                          HashMap
+	 */
 	private void searchMaster(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		List<Master> list = null;
 		HashMap<String, String> parameters = new HashMap<String, String>();
-		String year =request.getParameter("year");
-		String campus =request.getParameter("campus");
-		String name =request.getParameter("name");
+		String year = request.getParameter("year");
+		String campus = request.getParameter("campus");
+		String name = request.getParameter("name");
 		parameters.put("year", request.getParameter("year"));
 		parameters.put("campus", request.getParameter("campus"));
 		parameters.put("name", request.getParameter("name"));
@@ -155,12 +206,14 @@ public class MastersControler extends HttpServlet {
 		dispatcher.forward(request, response);
 	}
 
-	private void dispatch(HttpServletRequest request, HttpServletResponse response, String jsp, String message, Master master) throws ServletException, IOException {
+	private void dispatch(HttpServletRequest request, HttpServletResponse response, String jsp, String message,
+			Master master) throws ServletException, IOException {
 		request.setAttribute("MASTER", master);
 		dispatch(request, response, jsp, message);
 	}
-	
-	private void dispatch(HttpServletRequest request, HttpServletResponse response, String jsp, String message, List<Master> listOfMasters) throws ServletException, IOException {
+
+	private void dispatch(HttpServletRequest request, HttpServletResponse response, String jsp, String message,
+			List<Master> listOfMasters) throws ServletException, IOException {
 		request.setAttribute("LISTOFMASTERS", listOfMasters);
 		dispatch(request, response, jsp, message);
 	}

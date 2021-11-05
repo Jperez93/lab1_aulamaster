@@ -34,6 +34,10 @@ import objects.Student;
 
 /**
  * Servlet implementation class StudentsControler
+ * 
+ * This servlet is the controller of all requests related with the CRUD students
+ * functionality. Receives requests from JPSs, process the attributes of the
+ * requests and gives the control to the Student model
  */
 @MultipartConfig
 @WebServlet("/StudentsControler")
@@ -42,6 +46,13 @@ public class StudentsControler extends HttpServlet {
 
 	private StudentModel studentmodel;
 
+	/**
+	 * This is an auxiliary method in charged of cast the data sent to an array of
+	 * bytes
+	 * 
+	 * @param part. What is included in the form
+	 * @return The bytes casted from the input
+	 */
 	private byte[] castInputStreamPartIntoBytes(Part part) {
 		InputStream input;
 		byte[] bytes = null;
@@ -85,16 +96,14 @@ public class StudentsControler extends HttpServlet {
 	}
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-
-	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
+	 * 
+	 *      When a request is received, get the parameter 'action' which indicates
+	 *      the functionality requested and handle the request
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {	
+			throws ServletException, IOException {
 		String action = request.getParameter("action");
 		switch (action) {
 		case "Crear Alumno":
@@ -118,6 +127,19 @@ public class StudentsControler extends HttpServlet {
 		}
 	}
 
+	/**
+	 * 
+	 * @param request
+	 * @param response
+	 * @throws ServletException
+	 * @throws IOException
+	 * 
+	 *                          Given a form which includes information related with
+	 *                          a student, creates an instance of the class Student
+	 *                          and sends it to the Students Model trying to modify
+	 *                          the data in the register given by the key attribute
+	 *                          'nia'
+	 */
 	private void modifyStudent(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		int nia = Integer.parseInt(request.getParameter("nia"));
@@ -157,8 +179,18 @@ public class StudentsControler extends HttpServlet {
 		dispatch(request, response, formView, message, student);
 	}
 
-
-
+	/**
+	 * 
+	 * @param request
+	 * @param response
+	 * @throws ServletException
+	 * @throws IOException
+	 * 
+	 *                          Given an attribute 'nia', sends a request to the
+	 *                          Students Model in order to delete the register from
+	 *                          the database with the same key of the attribute
+	 *                          received
+	 */
 	private void deleteStudent(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		int nia = Integer.parseInt(request.getParameter("nia"));
@@ -169,6 +201,18 @@ public class StudentsControler extends HttpServlet {
 
 	}
 
+	/**
+	 * 
+	 * @param request
+	 * @param response
+	 * @throws ServletException
+	 * @throws IOException
+	 * 
+	 *                          Given the information sent by a form, creates an
+	 *                          instance of the class Student and send a request to
+	 *                          the Students Model in order to create a new register
+	 *                          with the information
+	 */
 	private void addStudent(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		int nia = studentmodel.getLastNia() + 1;
@@ -203,6 +247,18 @@ public class StudentsControler extends HttpServlet {
 
 	}
 
+	/**
+	 * 
+	 * @param request
+	 * @param response
+	 * @throws ServletException
+	 * @throws IOException
+	 * 
+	 *                          Given a nia, sends a request to the Student Model in
+	 *                          order to be returned an instance of the class
+	 *                          Student with the information of the register with
+	 *                          the same nia
+	 */
 	private void lookForStudent(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		Student student = new Student();
