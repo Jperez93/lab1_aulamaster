@@ -2,6 +2,8 @@ package model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+
 import java.util.List;
 
 
@@ -30,6 +32,8 @@ public class Master implements Serializable {
 	private String name;
 
 	private int year;
+	
+	private String description;
 
 	//bi-directional many-to-many association to Student
 	@ManyToMany(mappedBy="masters")
@@ -46,6 +50,14 @@ public class Master implements Serializable {
 		this.id = id;
 	}
 
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
 	public String getCampus() {
 		return this.campus;
 	}

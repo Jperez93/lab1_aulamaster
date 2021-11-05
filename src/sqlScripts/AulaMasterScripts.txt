@@ -1,0 +1,27 @@
+CREATE TABLE `inscriptions` (
+  `student` int NOT NULL,
+  `master` int NOT NULL,
+  PRIMARY KEY (`student`,`master`),
+  KEY `master_idx` (`master`),
+  CONSTRAINT `master` FOREIGN KEY (`master`) REFERENCES `master` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `student` FOREIGN KEY (`student`) REFERENCES `students` (`nia`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_spanish_ci;
+
+CREATE TABLE `master` (
+  `id` int NOT NULL,
+  `name` varchar(45) COLLATE utf8_spanish_ci NOT NULL,
+  `campus` varchar(45) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `year` int DEFAULT NULL,
+  `description` varchar(500) COLLATE utf8_spanish_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_spanish_ci;
+
+CREATE TABLE `students` (
+  `nia` int NOT NULL,
+  `name` varchar(45) COLLATE utf8_spanish_ci NOT NULL,
+  `surname1` varchar(45) COLLATE utf8_spanish_ci NOT NULL,
+  `surname2` varchar(45) COLLATE utf8_spanish_ci DEFAULT NULL,
+  `dateofbirth` date NOT NULL,
+  `photo` blob,
+  PRIMARY KEY (`nia`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_spanish_ci;

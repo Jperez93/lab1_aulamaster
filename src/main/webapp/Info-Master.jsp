@@ -50,9 +50,7 @@ if (message == null) {
 			<h3 class="u-text u-text-default u-text-3">
 				<%=m.getYear()%><br>
 			</h3>
-			<p class="u-text u-text-default u-text-4">Texto de ejemplo. Lorem
-				ipsum dolor sit amet, consectetur adipiscing elit nullam nunc justo
-				sagittis suscipit ultrices.</p>
+			<p class="u-text u-text-default u-text-4"><%=m.getDescription()%></p>
 			<div class="u-expanded-width u-table u-table-responsive u-table-1">
 				<%
 				if (!students.isEmpty()) {
